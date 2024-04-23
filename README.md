@@ -1,5 +1,5 @@
 ---------
-⚠️  Used within shared GH workflows: https://github.com/adjust/githubWorkflows/blob/main/.github/actions/jiraComment/action.yml
+⚠️  Used within shared [jiraComment](https://github.com/adjust/githubWorkflows/blob/main/.github/actions/jiraComment/action.yml) action
 ---------
 
 # Jira Login
@@ -30,20 +30,17 @@ jobs:
     name: Jira Example
     steps:
     - name: Login
-      uses: atlassian/gajira-login@v3
+      uses: adjust/gajira-login@v4
       env:
         JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
         JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
-    - name: Jira TODO
-      uses: atlassian/gajira-todo@v3
+    - name: Send a message
+      uses: adjust/gajira-comment@v4
       with:
-        project: GA
-        issuetype: Task
-        description: Created automatically via GitHub Actions
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        issue: FPLAT-410
+        comment: ${{ github.event.pusher.name }} pushed to repository: ${{ github.event.repository.full_name }}
 ```
 
 More examples at [gajira](https://github.com/atlassian/gajira) repository
